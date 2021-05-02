@@ -1,0 +1,45 @@
+<div class="container my-5">
+    <div class="row">
+        <% @products.each do |product| %>
+            <div class="col-4">
+                <div class="card p-5 my-2">
+                    <h4><%= product.name %></h4>
+                    <small>Price: <%= product.price %></small>
+                    <%= simple_form_for [product, @order_item] do |f| %>
+                        <%= f.input :quantity, label: false, input_html: { value: 1, min: 1 } %>
+                        <%= f.submit "Add to cart", class: "btn btn-success w-100" %>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<div class="container">
+    <h2>My cart</h2>
+    
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Subtotal</th>
+        </tr>
+    </thead>
+  <tbody>
+    <% @order.order_items.each do |item| %>
+    <tr>
+      <td><%= item.product.name %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.total %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Total: <%= @order.calculate_total %></td>
+    </tr>
+  </tbody>
+</table>
+    
+</div>
