@@ -2,8 +2,8 @@ module Promotion
   extend ActiveSupport::Concern
   def apply_promotion
     if product == tshirt
-      three_for_ten_percent_off
-    else
+      ten_percent_off_above_three
+    elsif product == data_voucher
       three_for_two
     end
   end
@@ -16,17 +16,15 @@ module Promotion
     end
   end
 
-  def three_for_ten_percent_off
-    (0..quantity).step(3) do |step|
-      self.total -= 1 unless step.zero?
-    end
+  def ten_percent_off_above_three
+    self.total = quantity * product.price - quantity if quantity >= 3
   end
 
   def tshirt
-    Product.find_by!(name: "T-Shirt")
+    Product.find_by(name: "T-Shirt")
   end
 
   def data_voucher
-    Product.find_by!(name: "Data Voucher")
+    Product.find_by(name: "Data Voucher")
   end
 end

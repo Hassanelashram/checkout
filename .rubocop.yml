@@ -9,6 +9,7 @@ AllCops:
     - 'support/**/*'
     - 'tmp/**/*'
     - 'test/**/*'
+    - 'Guardfile'
 
 Style/ConditionalAssignment:
   Enabled: false
@@ -40,3 +41,11 @@ Style/EmptyMethod:
   Enabled: false
 Bundler/OrderedGems:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: true
+  Exclude: 
+    - spec/**/*
+Metrics/MethodLength:
+  Enabled: true
+  Exclude: 
+    - spec/**/*
