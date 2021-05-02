@@ -5,11 +5,11 @@ class OrderItem < ApplicationRecord
 
   # validations
   validates :quantity, numericality: { greater_than: 0 }
-  #callbacks
+  # callbacks
   before_save :calculate_total
-  
+
   def calculate_total
     self.total = product.price * quantity
-    self.apply_promotion
+    apply_promotion
   end
 end

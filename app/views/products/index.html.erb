@@ -16,34 +16,37 @@
 
 <div class="container">
     <h2>My cart</h2>
+    <% if @order.order_items.empty? %>
+        <p>Your cart is empty</p>
+    <% else %>
+      <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Subtotal</th>
+          </tr>
+      </thead>
+    <tbody>
     
-    <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">Product</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Subtotal</th>
-        </tr>
-    </thead>
-  <tbody>
-    <% @order.order_items.each do |item| %>
-    <tr>
-      <td><%= item.product.name %></td>
-      <td>
-        <%= simple_form_for item do |f| %>
-          <%= f.input :quantity, label: false, input_html: {min: 1,class: "d-inline"} %>
-          <%= f.submit "Update", class: "d-inline" %>
-        <% end %>
-      </td>
-      <td><%= item.total %> <%= link_to "Remove", order_item_path(item), method: :delete, class: "btn btn-danger" %></td>
-    </tr>
+      <% @order.order_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td>
+          <%= simple_form_for item do |f| %>
+            <%= f.input :quantity, label: false, input_html: {min: 1,class: "d-inline"} %>
+            <%= f.submit "Update", class: "d-inline" %>
+          <% end %>
+        </td>
+        <td><%= item.total %> <%= link_to "Remove", order_item_path(item), method: :delete, class: "btn btn-danger" %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Total: <%= @order.calculate_total %></td>
+      </tr>
+    </tbody>
+  </table>
     <% end %>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>Total: <%= @order.calculate_total %></td>
-    </tr>
-  </tbody>
-</table>
-    
 </div>
