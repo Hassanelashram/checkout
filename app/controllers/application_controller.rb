@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   # storing the order on the session.
   def current_order
-    return Order.new unless session[:order_id]
+    order = Order.find_by(id: session[:order_id])
+    return Order.new unless order
 
-    Order.find(session[:order_id])
+    order
   end
 end
